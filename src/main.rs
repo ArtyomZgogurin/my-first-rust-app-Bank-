@@ -3,7 +3,6 @@ const BANK_NAME: &str = "Банк Солбиф";
 const MAX_PIN_ATTEMPTS: i8 = 3;
 const RUB_TO_USD: f64 = 83.30;
 
-
 struct Client {
     name: String,
     pin: String,
@@ -69,40 +68,38 @@ impl Client {
         }
         let num: u8 = choice_convert.trim().parse().unwrap();
         match num {
-                    1 => {
-                        println!("Укажите сумму которую хотите конвертировать из Рубли в USD:");
-                        let mut change_schet: String = String::new();
-                        match io::stdin().read_line(&mut change_schet) {
-                            Ok(_) => {}
-                            Err(e) => println!("ОШИБКА ВВОДА - {}", e),
-                        }
-                        let up_schet: f64 = change_schet.trim().parse().unwrap();
-                        self.rub_balance -= &up_schet;
-                        self.usd_balance += &up_schet / RUB_TO_USD;
-                        let ident: String = String::from("Конвертация из Рубли в USD.");
-                        self.change_history(ident);
-                    }
-                    2=> {
-                        println!("Укажите сумму которую хотите конвертировать из USD в Рубли:");
-                        let mut change_schet: String = String::new();
-                        match io::stdin().read_line(&mut change_schet) {
-                            Ok(_) => {}
-                            Err(e) => println!("ОШИБКА ВВОДА - {}", e),
-                        }
-                        let up_schet: f64 = change_schet.trim().parse().unwrap();
-                        self.usd_balance -= &up_schet;
-                        self.rub_balance += &up_schet * RUB_TO_USD;
-                        let ident: String = String::from("Конвертация из USD в Рубли.");
-                        self.change_history(ident);
-                    }
-                    _=>{
-                        println!("Неверное число операции")
-                    }
+            1 => {
+                println!("Укажите сумму которую хотите конвертировать из Рубли в USD:");
+                let mut change_schet: String = String::new();
+                match io::stdin().read_line(&mut change_schet) {
+                    Ok(_) => {}
+                    Err(e) => println!("ОШИБКА ВВОДА - {}", e),
                 }
+                let up_schet: f64 = change_schet.trim().parse().unwrap();
+                self.rub_balance -= &up_schet;
+                self.usd_balance += &up_schet / RUB_TO_USD;
+                let ident: String = String::from("Конвертация из Рубли в USD.");
+                self.change_history(ident);
+            }
+            2 => {
+                println!("Укажите сумму которую хотите конвертировать из USD в Рубли:");
+                let mut change_schet: String = String::new();
+                match io::stdin().read_line(&mut change_schet) {
+                    Ok(_) => {}
+                    Err(e) => println!("ОШИБКА ВВОДА - {}", e),
+                }
+                let up_schet: f64 = change_schet.trim().parse().unwrap();
+                self.usd_balance -= &up_schet;
+                self.rub_balance += &up_schet * RUB_TO_USD;
+                let ident: String = String::from("Конвертация из USD в Рубли.");
+                self.change_history(ident);
+            }
+            _ => {
+                println!("Неверное число операции")
             }
         }
-    
-
+    }
+}
 
 fn main() {
     let mut clients: Vec<Client> = vec![
@@ -139,7 +136,9 @@ fn main() {
                     3 => authorized_client.withdraw(),
                     4 => authorized_client.show_history(),
                     5 => authorized_client.convert(),
-                    6 =>{ break;}
+                    6 => {
+                        break;
+                    }
                     _ => {
                         panic!("ОШИБКА")
                     }
@@ -158,16 +157,18 @@ fn main() {
                         &authorized_client.name
                     );
                     match menu_selection() {
-                    1 => authorized_client.check_balance(),
-                    2 => authorized_client.deposit(),
-                    3 => authorized_client.withdraw(),
-                    4 => authorized_client.show_history(),
-                    5 => authorized_client.convert(),
-                    6 =>{ break;}
-                    _ => {
-                        panic!("ОШИБКА")
+                        1 => authorized_client.check_balance(),
+                        2 => authorized_client.deposit(),
+                        3 => authorized_client.withdraw(),
+                        4 => authorized_client.show_history(),
+                        5 => authorized_client.convert(),
+                        6 => {
+                            break;
+                        }
+                        _ => {
+                            panic!("ОШИБКА")
+                        }
                     }
-                }
                 }
             } else {
                 panic!("Вы не являетесь клиентом банка")
@@ -201,8 +202,8 @@ fn registration_client() -> Client {
     }
     let name: String = client_name.trim().parse().unwrap();
     println!("Задайте PIN:");
-    let pincode: String = String::new();
-    match io::stdin().read_line(&mut client_name) {
+    let mut pincode: String = String::new();
+    match io::stdin().read_line(&mut pincode) {
         Ok(_) => {}
         Err(e) => println!("ОШИБКА ВВОДА - {}", e),
     }
