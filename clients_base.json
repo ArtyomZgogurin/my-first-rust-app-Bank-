@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Анна",
+    "pin": "1234",
+    "rub_balance": 1500.0,
+    "usd_balance": 20.0,
+    "history": []
+  },
+  {
+    "name": "Иван",
+    "pin": "5678",
+    "rub_balance": 800.0,
+    "usd_balance": 100.0,
+    "history": []
+  }
+]

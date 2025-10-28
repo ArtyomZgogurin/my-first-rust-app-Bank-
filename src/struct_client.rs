@@ -4,6 +4,11 @@ use crate::config::RUB_TO_USD;
 use crate::config::BANK_NAME;
 use crate::config::MAX_PIN_ATTEMPTS;
 
+use std::fs::File;
+use std::io::Write;
+use std::fs::OpenOptions;
+
+const PATH_HISTORY: &str ="history_log_client/";
 pub struct Client {
     pub name: String,
     pub pin: String,
@@ -101,4 +106,17 @@ impl Client {
             }
         }
     }
+    pub fn history_in_file(&self) {
+    let path = PATH_HISTORY.to_owned()+&self.name.to_string() + ".txt";
+    if let Ok(mut file) = OpenOptions::new()
+        .write(true)
+        .append(true)
+        .create(true)
+        .open(path)
+    {
+        for i in &self.history {
+            let _ = writeln!(file, "{}", i);
+        }
+    }
+}
 }

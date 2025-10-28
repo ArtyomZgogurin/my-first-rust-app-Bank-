@@ -2,8 +2,9 @@ mod function_bank;
 mod config;
 mod struct_client;
 use struct_client::Client;
-
-
+use std::fs::File;
+use std::io::Write;
+use std::fs::OpenOptions;
 
 
 
@@ -44,6 +45,7 @@ fn main() {
                     4 => authorized_client.show_history(),
                     5 => authorized_client.convert(),
                     6 => {
+                        authorized_client.history_in_file();
                         break;
                     }
                     _ => {
@@ -69,7 +71,7 @@ fn main() {
                         3 => authorized_client.withdraw(),
                         4 => authorized_client.show_history(),
                         5 => authorized_client.convert(),
-                        6 => {
+                        6 => {authorized_client.history_in_file();
                             break;
                         }
                         _ => {
@@ -89,3 +91,4 @@ fn main() {
         }
     }
 }
+
